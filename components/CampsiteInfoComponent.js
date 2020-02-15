@@ -15,7 +15,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
     postFavorite: campsiteId => (postFavorite(campsiteId)),
-    postComment: (campsiteId, rating, author, comment) => (postComment(campsiteId, rating, author, text))
+    postComment: (campsiteId, rating, author, text) => (postComment(campsiteId, rating, author, text))
 };
 
 function RenderCampsite(props) {
@@ -74,16 +74,19 @@ function RenderComments({comments}) {
         );
     };
 
-    return(
-        <Card title='Comments'>
-            <FlatList
-                data={comments}
-                renderItem={renderCommentItem}
-                keyExtractor={item => item.id.toString()}
-            />
-        </Card>
-    );
-}
+    if(comments) {
+        return (
+            <Card title='Comments'>
+                <FlatList
+                    data={comments}
+                    renderItem={renderCommentItem}
+                    keyExtractor={item => item.id.toString()}
+                />
+            </Card>
+        );
+    }
+    return <View />
+};
 
 class CampsiteInfo extends Component {
 
@@ -111,7 +114,8 @@ class CampsiteInfo extends Component {
     }
 
     handleComment(campsiteId){
-        this.postComment(campsiteId, this.state.rating, this.state.author, this.state.text);
+        const {rating,author,text } = this.state;
+        this.props.postComment(campsiteId, rating, author, text);
         this.toggleModal();
     }
 
