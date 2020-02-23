@@ -102,7 +102,7 @@ class Reservation extends Component {
                     accessibilityLabel='Tap me to search for available campsites to reserve'
                 />
                 </View>
-            <</Animatable.View>
+            </Animatable.View>
         );
     }
 }
